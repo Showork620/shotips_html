@@ -5,6 +5,8 @@ This is my practice and portfolio.
 - 画像以外は src 内の資産を管理
 - 画像のみ server 内の資産を管理
 
+## ビルド
+npx gulp (タスク名)
 
 ## jpg, png 画像の圧縮（webp化）
 1. sec/assets/images 内に圧縮前の画像を配置
