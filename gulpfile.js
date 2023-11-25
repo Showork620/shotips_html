@@ -13,6 +13,6 @@ gulp.task("default", function () {
 
 gulp.task("include", function () {
   //includeのコンパイル
-  gulp.src("src/**/*.html").pipe(fileInclude()).pipe(gulp.dest("server/"));
+  gulp.src(["src/**/*.html","!src/assets/**/*.html"])
+    .pipe(fileInclude()).pipe(gulp.dest("server/"));
 });
-
