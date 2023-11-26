@@ -1,0 +1,26 @@
+<%
+  var _default = json['default'];
+  for ( var key in _default ) {
+    if ( typeof page[key] === 'undefined' ) {
+      page[key] = _default[key];
+    }
+  }
+-%>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= page['title'] %></title>
+  <meta content="<%= page['description'] %>" name="description">
+  <link rel="canonical" href="http://showork620.s324.xrea.com/">
+  <!-- favicon -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <!-- ogp -->
+  <meta property="og:title" content="<%= page['title'] %>">
+  <meta property="og:description" content="<%= page['description'] %>">
+  <meta property="og:type" content="<%= page['type'] %>">
+  <meta property="og:url" content="<%= page['url'] %>">
+  <!-- TODO: <meta property="og:image" content="サムネイル画像の URL"> -->
+  <meta property="og:site_name" content="SHOWORK -practice-">
+  <meta property="og:locale" content="ja_JP">
