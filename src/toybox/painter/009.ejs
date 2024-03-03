@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<%# meta読み込み | meta.json で管理 %>
+<%- include('../../assets/includes/_head', { page: json["toybox"] }); %>
+
+<style>
+  html {
+    overflow: hidden;
+  }
+  #drawingArea {
+    position: relative;
+    width: 96vw;
+    height: calc(80vh - 65px); /*広告領域考慮*/
+    border: 1px solid #000;
+    overflow: hidden;
+  }
+  .dot {
+    display: inline-block;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #000;
+  }
+</style>
+
+</head>
+<body>
+  <div id="drawingArea"></div>
+  <input type="color" id="colorPicker">
+  <select id="dotSizeSelect">
+    <option value="10" selected>10px</option>
+    <option value="20">20px</option>
+    <option value="35">35px</option>
+    <option value="55">55px</option>
+    <option value="80">80px</option>
+  </select>
+
+  <script>
+    let isDragging = false;
+    let color = '#000';
+    let dotSize = 10;
+    const drawingArea = document.getElementById('drawingArea');
+    const colorPicker = document.getElementById('colorPicker');
+    const dotSizeSelect = document.getElementById('dotSizeSelect');
+
+    colorPicker.addEventListener('change', function(event) {
+      color = event.target.value;
+    });
+    dotSizeSelect.addEventListener('change', function(event) {
+      dotSize = event.target.value;
+    });
+    drawingArea.addEventListener('mousedown', handleStart);
+    drawingArea.addEventListener('touchstart', handleStart);
+
+    function handleStart(event) {
+      isDragging = true;
+      const x = event.clientX || event.touches[0].clientX;
+      const y = event.clientY || event.touches[0].clientY;
+
+      // ドラッグ開始時にdotを生成
+      createDot(x - drawingArea.offsetLeft, y - drawingArea.offsetTop);
+
+      document.addEventListener('mousemove', handleMove);
+      document.addEventListener('touchmove', handleMove);
+      document.addEventListener('mouseup', handleEnd);
+      document.addEventListener('touchend', handleEnd);
+    }
+
+    function handleMove(event) {
+      if (isDragging) {
+        const x = event.clientX || event.touches[0].clientX;
+        const y = event.clientY || event.touches[0].clientY;
+
+        // ドラッグ中の座標を取得してdotを生成
+        createDot(x - drawingArea.offsetLeft, y - drawingArea.offsetTop);
+      }
+    }
+
+    function handleEnd() {
+      isDragging = false;
+
+      document.removeEventListener('mousemove', handleMove);
+      document.removeEventListener('touchmove', handleMove);
+      document.removeEventListener('mouseup', handleEnd);
+      document.removeEventListener('touchend', handleEnd);
+    }
+
+    function createDot(x, y) {
+      const dot = document.createElement('div');
+      dot.style.backgroundColor = color;
+      dot.style.width = dotSize + 'px';
+      dot.style.height = dotSize + 'px';
+      dot.className = 'dot';
+      dot.style.left = x + 'px';
+      dot.style.top = y + 'px';
+      dot.style.borderRadius = dotSize / 2 + 'px';
+      drawingArea.appendChild(dot);
+    }
+  </script>
+
+  <!--
+    クリックすると点が打てるようになる
+    　>点を作る（html,css）
+    　>クリックしたら点を作る（js）
+    　>クリックした場所に点を作る（js）
+    　　>クリックした場所を取得する（js）
+    クリックではなくドラッグで点を打る
+    　>スマホ対応させる
+
+    キャンバスを作る
+    　>ずれを修正する
+
+    色を選べる
+      >カラーピッカーを設置
+      >色を変える（js）
+    点の大きさを選べる
+      >ドロップダウンを設置
+      >大きさを変える（js）
+
+    ドットの形を丸にする
+      >cssで形を変える
+      >ドットの大きさに応じて radius を変える（js）
+      >ラジオボタンを設置
+
+      >形を変える（js）
+    マウスカーソルを変える
+  -->
+</body>
+</html>

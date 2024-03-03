@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <%# meta読み込み | meta.json で管理 %> <%- include('../assets/includes/_head', { page: json["toybox"] }); %>
+
+    <style>
+      html {
+        overflow: hidden;
+      }
+      #drawingArea {
+        position: relative;
+        width: 96vw;
+        height: calc(80vh - 65px); /*広告領域考慮*/
+        border: 1px solid #000;
+        overflow: hidden;
+
+        cursor: crosshair;
+      }
+      .dot {
+        display: inline-block;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: #000;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <!--キャンバス-->
+    <div id="drawingArea"></div>
+    <!--カラーピッカー-->
+    <input type="color" id="colorPicker" />
+    <!--ドットサイズ-->
+    <select id="dotSizeSelect">
+      <option value="10" selected>10px</option>
+      <option value="20">20px</option>
+      <option value="35">35px</option>
+      <option value="55">55px</option>
+      <option value="80">80px</option>
+    </select>
+    <!--ドットシェイプ-->
+    <form style="display: inline-block">
+      <label> <input type="radio" name="dotShape" value="circle" checked /> ● </label>
+      <label> <input type="radio" name="dotShape" value="square" /> ■ </label>
+    </form>
+    <!--ペン-->
+    <div id="pen"></div>
+
+    <script>
+      let color = "#000";
+      const colorPicker = document.getElementById("colorPicker");
+      colorPicker.addEventListener("change", function (event) {
+        color = event.target.value;
+      });
+
+      let dotSize = 10;
+      const dotSizeSelect = document.getElementById("dotSizeSelect");
+      dotSizeSelect.addEventListener("change", function (event) {
+        dotSize = event.target.value;
+      });
+
+      let dotShape = "circle";
+      const dotShapeRadios = document.querySelectorAll('input[name="dotShape"]');
+      dotShapeRadios.forEach((radio) => {
+        radio.addEventListener("change", () => {
+          dotShape = document.querySelector('input[name="dotShape"]:checked').value;
+        });
+      });
+
+      let isDragging = false;
+      const drawingArea = document.getElementById("drawingArea");
+
+      drawingArea.addEventListener("mousedown", handleStart);
+      drawingArea.addEventListener("touchstart", handleStart);
+
+      function handleStart(event) {
+        isDragging = true;
+        const x = event.clientX || event.touches[0].clientX;
+        const y = event.clientY || event.touches[0].clientY;
+
+        // ドラッグ開始時にdotを生成
+        createDot(x - drawingArea.offsetLeft, y - drawingArea.offsetTop);
+
+        document.addEventListener("mousemove", handleMove);
+        document.addEventListener("touchmove", handleMove);
+        document.addEventListener("mouseup", handleEnd);
+        document.addEventListener("touchend", handleEnd);
+      }
+
+      function handleMove(event) {
+        // ドラッグ中の座標を取得してdotを生成
+        if (isDragging) {
+          const x = event.clientX || event.touches[0].clientX;
+          const y = event.clientY || event.touches[0].clientY;
+
+          createDot(x - drawingArea.offsetLeft, y - drawingArea.offsetTop);
+        }
+      }
+
+      function handleEnd() {
+        isDragging = false;
+
+        document.removeEventListener("mousemove", handleMove);
+        document.removeEventListener("touchmove", handleMove);
+        document.removeEventListener("mouseup", handleEnd);
+        document.removeEventListener("touchend", handleEnd);
+      }
+
+      function createDot(x, y) {
+
+        const dot = document.createElement("div");
+        dot.style.backgroundColor = color;
+        dot.style.width = dotSize + "px";
+        dot.style.height = dotSize + "px";
+        dot.className = "dot";
+        dot.style.left = x + "px";
+        dot.style.top = y + "px";
+
+        if (dotShape === "circle") {
+          dot.style.borderRadius = dotSize / 2 + "px";
+        }
+        drawingArea.appendChild(dot);
+      }
+    </script>
+
+    <!--
+    クリックすると点が打てるようになる
+    　>点を作る（html,css）
+    　>クリックしたら点を作る（js）
+    　>クリックした場所に点を作る（js）
+    　　>クリックした場所を取得する（js）
+    クリックではなくドラッグで点を打る
+    　>スマホ対応させる
+
+    キャンバスを作る
+    　>ずれを修正する
+
+    色を選べる
+      >カラーピッカーを設置
+      >色を変える（js）
+    点の大きさを選べる
+      >ドロップダウンを設置
+      >大きさを変える（js）
+
+    ドットの形を丸にする
+      >cssで形を変える
+      >ドットの大きさに応じて radius を変える（js）
+      >ラジオボタンを設置
+
+      >形を変える（js）
+
+    マウスカーソルを変える
+    　>ドットの中央から描きたい
+  --></body>
+</html>

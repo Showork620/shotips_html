@@ -1,10 +1,81 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<%# meta読み込み | > meta.json で管理 %>
+<%# meta読み込み | meta.json で管理 %>
 <%- include('./assets/includes/_head', { page: json["default"] }); %>
 </head>
 <body>
-  <p><%= 'hello EJS' %></p>
+  <header>
+    <div>
+      SHOWORK -practice-
+    </div>
+    <nav aria-label="グローバルナビ">
+      <ul>
+        <li>
+          <a href="./about/index.html">
+            このサイトについて
+          </a>
+        </li>
+        <li>
+          <a href="./contact/index.html">
+            お問い合わせ
+          </a>
+        </li>
+        <li>
+          <a href="./toybox/index.html">
+            作ったもの（仮）
+          </a>
+        </li>
+        <li>
+          <a href="./blog/index.html">
+            ヒント集（仮）
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="description" class="c-description">
+      <h2 class="c-description--head">ユーザーも開発者も快適なwebサイト作り</h2>
+      <p class="c-description--detail">現役エンジニアの練習ノート</p>
+    </section>
+    <section class="c-contentsPickup">
+      <h2 class="c-contentsPickup--head">Pickup</h2>
+      <ul>
+        <li>
+          <a href="#">
+            <div>
+              <h3>クイズ（仮）</h3>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <a href="#">
+            <div>
+              <h3>ヒント集（仮）</h3>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <button id="testButton">testButton</button>
+    <div id="testDiv" tabindex="0">testDiv</div>
+  </main>
+  <script>
+
+    // テスト用
+    const testButton = document.getElementById('testButton');
+    const testDiv = document.getElementById('testDiv');
+    testButton.addEventListener('click', () => {
+      alert('testButton clicked');
+    });
+    testDiv.addEventListener('click', () => {
+      alert('testDiv clicked');
+    });
+  </script>
 </body>
 </html>

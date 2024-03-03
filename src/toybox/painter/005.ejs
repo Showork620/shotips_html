@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <%# meta読み込み | meta.json で管理 %> <%- include('../../assets/includes/_head', { page: json["toybox"] }); %>
+
+    <style>
+      /* スマホで動かないように */
+      html {
+        overflow: hidden;
+      }
+      .dot {
+        display: inline-block;
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      var isDragging = false;
+
+      document.addEventListener("mousedown", handleStart);
+      document.addEventListener("touchstart", handleStart);
+
+      function handleStart(event) {
+        isDragging = true;
+        var x = event.clientX || event.touches[0].clientX;
+        var y = event.clientY || event.touches[0].clientY;
+
+        // ドラッグ開始時にdotを生成
+        createDot(x, y);
+
+        document.addEventListener("mousemove", handleMove);
+        document.addEventListener("touchmove", handleMove);
+        document.addEventListener("mouseup", handleEnd);
+        document.addEventListener("touchend", handleEnd);
+      }
+
+      function handleMove(event) {
+        if (isDragging) {
+          var x = event.clientX || event.touches[0].clientX;
+          var y = event.clientY || event.touches[0].clientY;
+
+          // ドラッグ中の座標を取得してdotを生成
+          createDot(x, y);
+        }
+      }
+
+      function handleEnd() {
+        isDragging = false;
+
+        document.removeEventListener("mousemove", handleMove);
+        document.removeEventListener("touchmove", handleMove);
+        document.removeEventListener("mouseup", handleEnd);
+        document.removeEventListener("touchend", handleEnd);
+      }
+
+      function createDot(x, y) {
+        var dot = document.createElement("div");
+        dot.className = "dot";
+        dot.style.left = x + "px";
+        dot.style.top = y + "px";
+        document.body.appendChild(dot);
+      }
+
+      const html = document.querySelector("html");
+      html.addEventListener("click", butotnClick);
+    </script>
+
+    <!--
+    クリックすると点が打てるようになる
+    　>点を作る（html,css）
+    　>クリックしたら点を作る（js）
+    　>クリックした場所に点を作る（js）
+    　　>クリックした場所を取得する（js）
+    　>クリックではなくドラッグで点を打る
+
+    キャンバスを作る
+    色を選べる
+    点の大きさを選べる
+    マウスカーソルを変える
+  -->
+  </body>
+</html>

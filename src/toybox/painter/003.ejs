@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<%# meta読み込み | meta.json で管理 %>
+<%- include('../../assets/includes/_head', { page: json["toybox"] }); %>
+
+<style>
+  .dot {
+    display: inline-block;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #000;
+  }
+</style>
+
+</head>
+<!-- クリックした場所を取得する -->
+<!-- event.clientX で クリックした場所をゲット -->
+<!-- element.style で cssの値を変更できる -->
+
+<body>
+  <script>
+    let isDragging = false;
+
+    const butotnClick = (event) => {
+      const x = event.clientX;
+      const y = event.clientY;
+      const dot = document.createElement('div');
+
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+
+      dot.classList.add('dot');
+      document.body.appendChild(dot);
+    }
+    const html = document.querySelector('html');
+    html.addEventListener('click', butotnClick);
+  </script>
+</body>
+</html>

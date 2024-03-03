@@ -1,14 +1,14 @@
 {
   "default": {
     "title": "SHOWORK -practice- | 見る人も作る人もサクサクなweb体験!?",
-    "description": "ユーザーも開発者も快適なweb体験を目指すため日々勉強中",
+    "description": "ユーザーも開発者も快適なwebサイト作りを目指すため勉強中",
     "type": "website",
     "url": "http://showork620.s324.xrea.com/"
   },
 
   "about": {
     "title": "誰が何を作ったの？ | SHOWORK -practice-",
-    "description": "ユーザーも開発者も快適なweb体験を目指すため日々勉強中。",
+    "description": "ユーザーも開発者も快適なwebサイト作りを目指すため勉強中。",
     "type": "article",
     "url": "http://showork620.s324.xrea.com/"
   },
@@ -16,6 +16,20 @@
   "contact": {
     "title": "お問い合わせ | SHOWORK -practice-",
     "description": "contact us, description",
+    "type": "article",
+    "url": "http://showork620.s324.xrea.com/"
+  },
+
+  "toybox": {
+    "title": "作ったもの | SHOWORK -practice-",
+    "description": "contact us, description",
+    "type": "article",
+    "url": "http://showork620.s324.xrea.com/"
+  },
+
+  "toybox_painter": {
+    "title": "JavaScriptペインター | SHOWORK -practice-",
+    "description": "JavaScriptで簡単にペインターが作れるけれど、本当に誰も得しません",
     "type": "article",
     "url": "http://showork620.s324.xrea.com/"
   }

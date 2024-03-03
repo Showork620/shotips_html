@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<%# meta読み込み | meta.json で管理 %>
+<%- include('../../assets/includes/_head', { page: json["toybox"] }); %>
+
+<style>
+  .dot {
+    display: inline-block;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #000;
+  }
+</style>
+
+</head>
+<body>
+  <script>
+    // ドラッグ開始時にdotを生成
+    document.addEventListener('mousedown', function (event) {
+      isDragging = true;
+      createDot(event.clientX, event.clientY);
+    });
+
+    // ドラッグ中の座標を取得してdotを生成
+    document.addEventListener('mousemove', function (event) {
+      if (isDragging) {
+        createDot(event.clientX, event.clientY);
+      }
+    });
+
+    // ドラッグ終了
+    document.addEventListener('mouseup', function () {
+      isDragging = false;
+    });
+
+    function createDot(x, y) {
+      var dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.style.left = x + 'px';
+      dot.style.top = y + 'px';
+      document.body.appendChild(dot);
+    }
+    const html = document.querySelector('html');
+    html.addEventListener('click', butotnClick);
+  </script>
+
+  <!--
+    クリックすると点が打てるようになる
+    　>点を作る（html,css）
+    　>クリックしたら点を作る（js）
+    　>クリックした場所に点を作る（js）
+    　　>クリックした場所を取得する（js）
+    　>クリックではなくドラッグで点を打る
+
+    キャンバスを作る
+    色を選べる
+    点の大きさを選べる
+    マウスカーソルを変える
+  -->
+</body>
+</html>
